@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>我的第一篇blog-kmp算法 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="这是我的第一篇博客。      最近在学数据结构，卑微大学生被kmp算法折磨了好久，不过也算是勉强理解了。结合教材也有一些对kmp算法的见解      相对于比较简单直观的Brute-Force算法，kmp算法在时间复杂度上有了一定的优化，但理解起来却比较困难。在弄明白kmp算法之前，不妨先在看一遍BF算法。      先用指针i，j分别指向主串s和模式串t中当前比较的位置，i初值为pos(pos">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我的第一篇blog-kmp算法">
+<meta property="og:url" content="http://example.com/2020/10/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87blog-kmp%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="这是我的第一篇博客。      最近在学数据结构，卑微大学生被kmp算法折磨了好久，不过也算是勉强理解了。结合教材也有一些对kmp算法的见解      相对于比较简单直观的Brute-Force算法，kmp算法在时间复杂度上有了一定的优化，但理解起来却比较困难。在弄明白kmp算法之前，不妨先在看一遍BF算法。      先用指针i，j分别指向主串s和模式串t中当前比较的位置，i初值为pos(pos">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-10-31T02:41:27.000Z">
+<meta property="article:modified_time" content="2020-10-31T02:43:36.412Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-我的第一篇blog-kmp算法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/10/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87blog-kmp%E7%AE%97%E6%B3%95/" class="article-date">
+  <time datetime="2020-10-31T02:41:27.000Z" itemprop="datePublished">2020-10-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      我的第一篇blog-kmp算法
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这是我的第一篇博客。<br>      最近在学数据结构，卑微大学生被kmp算法折磨了好久，不过也算是勉强理解了。结合教材也有一些对kmp算法的见解<br>      相对于比较简单直观的Brute-Force算法，kmp算法在时间复杂度上有了一定的优化，但理解起来却比较困难。在弄明白kmp算法之前，<br>不妨先在看一遍BF算法。<br>      先用指针i，j分别指向主串s和模式串t中当前比较的位置，i初值为pos(pos是指主串你要比较的位置，不一定是首部)。在均未到达串尾时，依次比较，<br>若相等则i和j都指向串下一个位置，否则，将重置成i-j+2，j重置为1继续比较。<br>例如：主串ababcabcacbab,模式串abcac<br>第一轮 ababcaccacbab    i=3<br>           abc                       j=3<br>第二轮  ababcabcacbab    i=2<br>              a                         j=1<br>第三轮  ababcaccacbab    i=7<br>            abcac                   j=5</p>
+<p>附上代码（部分摘自课本《数据结构案例教程》)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Str_index</span><span class="params">(String s,String t,<span class="keyword">int</span> pos)</span></span>&#123;<span class="comment">//模式串t，主串s，String是之前声明的结构体</span></span><br><span class="line">	i=pos;</span><br><span class="line">	j=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>(i&lt;s.ch[<span class="number">0</span>]&amp;&amp;j&lt;=t.ch[<span class="number">0</span>])&#123;<span class="comment">//为方便比较将串的长度放在0地址单元，串值从1开始</span></span><br><span class="line">		<span class="keyword">if</span>(s.ch[i]==t.ch[j])&#123;</span><br><span class="line">			++i;</span><br><span class="line">			++j;	</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			i=i-j+<span class="number">2</span>;</span><br><span class="line">			j=<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(j&gt;t.ch[<span class="number">0</span>])&#123;</span><br><span class="line">		<span class="keyword">return</span> (i-t.ch[<span class="number">0</span>]);</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<pre><code>   这是BF算法的过程，简单粗暴，随之带来的是时间复杂度的问题，在最坏的情况下是O(n*m);有三个大佬决心修改这个算法，于是有了kmp算法。</code></pre>
+<p>在此之前需要引入了最大相等前后缀这个概念。前缀是不包含尾字母，而后缀则不包含首字母。<br>kmp算法希望的是当两串无法匹配时，主串的i位置不动，模式串向右滑动多少比较合适。<br>例如：<br>         i<br>ababcaccacbab<br>ababd<br>         j<br>此时将模式串向右移，移动到如下位置：<br>        i<br>ababcaccacbab<br>    aba<br>        j<br>我们所要知道的是向右移动多少，即需要知道失配位置前的最大相等前后缀。<br>因此可以建立一个next数组，数组下标是j，用于存储这个位置之前的最大相等前后缀，若发生失配时，直接令j=next[j]，让模式串向右移。<br>这就需要求出模式串的next数组。<br>先上代码（摘自课本《数据结构案例教程》）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Get_next</span><span class="params">(String t,<span class="keyword">int</span> &amp;next[])</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> j=<span class="number">1</span>;<span class="comment">//后缀第一个位置 </span></span><br><span class="line">	<span class="keyword">int</span> k=<span class="number">0</span>;<span class="comment">//前缀第一个位置 </span></span><br><span class="line">	<span class="keyword">int</span> next[<span class="number">1</span>]=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(j&lt;t-&gt;ch[<span class="number">0</span>])&#123;<span class="comment">//当j没有到串尾时 </span></span><br><span class="line">		<span class="keyword">if</span>(k==<span class="number">0</span>||t-&gt;ch[j]==t-&gt;ch[k]) &#123;</span><br><span class="line">			++j;</span><br><span class="line">			++k;</span><br><span class="line">			next[j]=k; </span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			k=next[k];<span class="comment">//这是一个递推的过程</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>递推k=next[k]，这个k=next[k]一直让人头痛无比，其实我们如果将这个模式串既看成主串又看成模式串会方便理解一点。<br>单一模式串理解：<br>                j<br>abacdababc<br>      k</p>
+<p>把模式串既看成主串又看成模式串<br>        j<br>dababc<br>  abab<br>        k<br>k=next[k]这边可以这样理解当k=3(指向c),此时j=8(指向b), 此时失配发生，于是令k=next[k]，<br>        j<br>dababc<br>      abac<br>        k<br>于是再次发生a与c比较。直到相等或者k回到串首。</p>
+<p>最后附上kmp算法的代码：（依旧是摘自课本《数据结构案例教程》）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Index</span><span class="params">(String s,String t,<span class="keyword">int</span> pos)</span></span>&#123;<span class="comment">//文本串s，模式串t，以及你要开始匹配的位置 </span></span><br><span class="line">	<span class="keyword">int</span> i=pos;</span><br><span class="line">	<span class="keyword">int</span>	j=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>(i&lt;=s.ch[<span class="number">0</span>]&amp;&amp;j&lt;=t.ch[<span class="number">0</span>])&#123;<span class="comment">//两串均为比较到串尾，ch[0]用于存储串长 </span></span><br><span class="line">		<span class="keyword">if</span>(j==<span class="number">0</span>||s.ch[i]==t.ch[i])&#123;</span><br><span class="line">			++i;</span><br><span class="line">			++j;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> </span><br><span class="line">		j = next[j];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(j&gt;t.ch[<span class="number">0</span>])</span><br><span class="line">	<span class="keyword">return</span> (i-t.ch[<span class="number">0</span>]);<span class="comment">//匹配成功，返回匹配成功的起始位置</span></span><br><span class="line">	<span class="keyword">else</span> </span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第一篇博客可能写得有些谬误或者语无伦次，望海涵。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/10/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87blog-kmp%E7%AE%97%E6%B3%95/" data-id="ckgx30e990001mcvhdd4yh57w" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/10/28/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/10/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87blog-kmp%E7%AE%97%E6%B3%95/">我的第一篇blog-kmp算法</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/28/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
